@@ -438,6 +438,7 @@ nav .fas {
         right: 0;
         height: 100vh;
         padding-top: 50px;
+        transform: translateX(200px);
     }
 
     nav ul li {
