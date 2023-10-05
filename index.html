@@ -16,11 +16,11 @@
                 <img src="./images-resources/logo.png" class="logo"></img>
                 <ul class="custom-list">
                     <i class="fas fa-times"></i>
-                    <li class="nav-list" onclick="openSection('header')">Home</li>
-                    <li class="nav-list" onclick="openSection('about-me')">About</li>
-                    <li class="nav-list" onclick="openSection('services')">Services</li>
-                    <li class="nav-list" onclick="openSection('portfolio')">Portfolio</li>
-                    <li class="nav-list" onclick="openSection('contact')">Contact</li>
+                    <li class="nav-list close" onclick="openSection('header'); closeshow('header')">Home</li>
+                    <li class="nav-list" onclick="openSection('about-me'); closeshow('about-me')">About</li>
+                    <li class="nav-list" onclick="openSection('services'); closeshow('services')">Services</li>
+                    <li class="nav-list" onclick="openSection('portfolio'); closeshow('portfolio')">Portfolio</li>
+                    <li class="nav-list" onclick="openSection('contact'); closeshow('contact')">Contact</li>
                 </ul>
                 <i class="fas fa-bars"></i>
             </nav>
@@ -166,10 +166,10 @@
                 </div>
                 <div class="contact-right">
                     <!-- Form -->
-                    <form action="">
-                        <input type="text" placeholder="NAME" required />
-                        <input type="email" placeholder="Email Address" required/>
-                        <textarea name="message" rows="6" placeholder="Message"></textarea>
+                    <form onsubmit="sendemail(); reset(); return false;">
+                        <input type="text" id="name" placeholder="NAME" required />
+                        <input type="email" id="email" placeholder="Email Address" required/>
+                        <textarea name="message" id="message" rows="6" placeholder="Message"></textarea>
                         <button type="submit" class="btn btn3">submit</button>
                     </form>
                 </div>
@@ -183,6 +183,8 @@
     <script>
         var tabLinks = document.getElementsByClassName('tab-links');
         var tabContents = document.getElementsByClassName('tab-contents');
+
+        var navlists=document.getElementsByClassName("nav-list");
         
         function openSection(sectionName) {
             const section = document.getElementById(sectionName);
@@ -191,6 +193,15 @@
                 behavior: 'smooth' // Add smooth scrolling effect
                 });
              }
+        }
+
+        function closeshow(listitem){
+            for (navlist of navlists){
+                navlist.classList.remove('close');
+            }
+            event.currentTarget.classList.add('close');
+            document.querySelector('nav ul').classList.remove('show');
+
         }
 
         function openTab(tabName) {
@@ -213,9 +224,6 @@
             document.querySelector('nav ul').classList.remove('show');
         });
         
-        document.querySelector('.nav-list').addEventListener('click', function () {
-            document.querySelector('nav ul').classList.remove('show');
-        });
         const Home=document.querySelector(".navtohome");
         window.addEventListener("scroll", ( ) =>{
             if (window.pageYOffset>100){
@@ -225,6 +233,20 @@
                 Home.classList.remove("active");
             }
         })
+    </script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script>
+        function sendemail(){
+            Email.send({
+            SecureToken : "41b57c36-5cc2-44c6-9a14-6ccb2d3ec134",
+            To : 'asifali37773@gmail.com',
+            From : document.getElementById('email').value,
+            Subject : document.getElementById('name').value+' wants to contact',
+            Body : document.getElementById('message').value
+        }).then(
+        message => alert(message)
+        );
+        }
     </script>
 </body>
 </html>
