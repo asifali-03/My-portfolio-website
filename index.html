@@ -234,18 +234,23 @@
             }
         })
     </script>
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script >
+        (function(){
+            emailjs.init("2RYTHPUP4W-blb6qV");
+        })();
+    </script>
     <script>
         function sendemail(){
-            Email.send({
-            SecureToken : "41b57c36-5cc2-44c6-9a14-6ccb2d3ec134",
-            To : 'asifali37773@gmail.com',
-            From : document.getElementById('email').value,
-            Subject : document.getElementById('name').value+' wants to contact',
-            Body : document.getElementById('message').value
-        }).then(
-        message => alert(message)
-        );
+            var params= {
+                from_name : document.getElementById("name").value,
+                email : document.getElementById("email").value,
+                message : document.getElementById("message").value
+            }
+            emailjs.send("service_u1t2kcm","template_w8l528a",params).then(function (res){
+                alert("Email sent successfully!");
+            })
+        
         }
     </script>
 </body>
